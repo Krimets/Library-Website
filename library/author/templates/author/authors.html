@@ -1,0 +1,94 @@
+{% extends 'authentication/Base.html' %}
+{% load static %}
+
+{% block title %}
+Authors page
+{% endblock %}
+
+{% block logout %}
+{% if request.user.is_authenticated %}
+        <button class="btn btn-primary" type="submit">
+          <a href="/logout">Logout</a></button>
+{% if request.user.role == 1 %}
+<div>
+<a href="create">Create new Author</a>
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block orders %}
+{% if request.user.is_authenticated %}
+{% if request.user.role == 0 %}
+<a href="/orders">My orders</a>
+{% elif request.user.role == 1 %}
+<a href="/orders">Orders</a>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block books %}
+{% if request.user.is_authenticated %}
+<a href="/books">Books</a>
+{% endif %}
+{% endblock %}
+
+{% block authors %}
+{% if request.user.is_authenticated %}
+<a href="/authors"><b>Authors</b></a>
+{% endif %}
+{% endblock %}
+
+{% block users %}
+{% if request.user.is_authenticated %}
+<a href="/users">Users</a>
+{% endif %}
+{% endblock %}
+
+{% block register %}
+{% if not request.user.is_authenticated %}
+<a href="/register">Registration</a>
+{% endif %}
+{% endblock %}
+
+{% block login %}
+{% if not request.user.is_authenticated %}
+<a href="/login">Login</a>
+{% endif %}
+{% endblock %}
+{% block Body %}
+{% if request.user.is_authenticated %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/table.css' %}">
+<table>
+    <tr>
+        <th scope="col"></th>
+        <th scope="col">Author id</th>
+        <th scope="col">Author name</th>
+        <th scope="col">Author surname</th>
+        <th scope="col">Author patronymic</th>
+        <th scope="col">Books</th>
+    </tr>
+    {% for object in object_list %}
+        <tr>
+        <!-- Display Objects -->
+
+        <td>{% if not object.books.all %}<a href="/authors/delete/{{ object.id }}/"><img src="{% static 'img/del.jpeg' %}" width="20" title="Delete"></a>{% endif %}</td>
+        <td>{{ object.id }}</td>
+        <td>{{ object.name }}</td>
+        <td>{{ object.surname }}</td>
+        <td>{{ object.patronymic }}</td>
+        <td>{% for book in object.books.all %} {{ book.name }}<br> {% endfor %}</td>
+        <!-- If object is empty  -->
+    {% empty %}
+        <td>You have no permission or author list is empty</td>
+    {% endfor %}
+    </tr>
+</table>
+{% else %}
+<div>
+<h2>Welcome to our library, unknown</h2>
+    <p>You are not logged in.</p></div>
+{% endif %}
+
+{% endblock %}
+

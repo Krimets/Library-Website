@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+     {% if request.user.is_authenticated %} <p>Hello, {{ user.first_name }}</p>{% endif %}
+            <p>{% block logout %}{% endblock %}</p>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <nav1>
+        <h1><a href="/">Library</a></h1>
+      </nav1>
+        <p>A place to discover and learn</p>
+      </header>
+      <nav>
+        <ul>
+          <li>{% block orders %}{% endblock %}</li>
+          <li>{% block books %}{% endblock %}</li>
+          <li>{% block authors %}{% endblock %}</li>
+          <li>{% block users %}{% endblock %}</li>
+          <li>{% block register %}{% endblock %}</li>
+          <li>{% block login %}{% endblock %}</li>
+        </ul>
+      </nav>
+      <section>
+      {% block Body %}{% endblock %}
+      </section>
+      <footer>
+        &copy; 2023 Library Website
+      </footer>
+    </div>
+  </body>
+</html>

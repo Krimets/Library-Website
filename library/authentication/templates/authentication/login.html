@@ -1,0 +1,72 @@
+{% extends 'authentication/Base.html' %}
+{% load static %}
+
+{% block title %}
+Login page
+{% endblock %}
+
+{% block logout %}
+{% if request.user.is_authenticated %}
+        <button class="btn btn-primary" type="submit">
+          <a href="/logout">Logout</a></button>
+{% endif %}
+{% endblock %}
+
+{% block orders %}
+{% if request.user.is_authenticated %}
+{% if request.user.role == 0 %}
+<a href="/orders">My orders</a>
+{% elif request.user.role == 1 %}
+<a href="/orders">Orders</a>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block books %}
+{% if request.user.is_authenticated %}
+<a href="/books">Books</a>
+{% endif %}
+{% endblock %}
+
+{% block authors %}
+{% if request.user.is_authenticated %}
+<a href="/authors">Authors</a>
+{% endif %}
+{% endblock %}
+
+{% block users %}
+{% if request.user.is_authenticated %}
+<a href="/users">Users</a>
+{% endif %}
+{% endblock %}
+
+{% block register %}
+{% if not request.user.is_authenticated %}
+<a href="/register">Registration</a>
+{% endif %}
+{% endblock %}
+
+{% block login %}
+{% if not request.user.is_authenticated %}
+<a href="/login"><b>Login</b></a>
+{% endif %}
+{% endblock %}
+
+{% block Body %}
+<div>
+<h2>Login</h2>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+    </div>
+    <button type="submit">Login</button>
+</form>
+    </div>
+{% endblock %}
+

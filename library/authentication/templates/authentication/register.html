@@ -1,0 +1,93 @@
+{% extends 'authentication/Base.html' %}
+{% load static %}
+
+{% block title %}
+Register page
+{% endblock %}
+
+{% block logout %}
+{% if request.user.is_authenticated %}
+        <button class="btn btn-primary" type="submit">
+          <a href="/logout">Logout</a></button>
+{% endif %}
+{% endblock %}
+
+{% block orders %}
+{% if request.user.is_authenticated %}
+{% if request.user.role == 0 %}
+<a href="/orders">My orders</a>
+{% elif request.user.role == 1 %}
+<a href="/orders">Orders</a>
+{% endif %}
+{% endif %}
+{% endblock %}
+
+{% block books %}
+{% if request.user.is_authenticated %}
+<a href="/books">Books</a>
+{% endif %}
+{% endblock %}
+
+{% block authors %}
+{% if request.user.is_authenticated %}
+<a href="/authors">Authors</a>
+{% endif %}
+{% endblock %}
+
+{% block users %}
+{% if request.user.is_authenticated %}
+<a href="/users">Users</a>
+{% endif %}
+{% endblock %}
+
+{% block register %}
+{% if not request.user.is_authenticated %}
+<a href="/register"><b>Registration</b></a>
+{% endif %}
+{% endblock %}
+
+{% block login %}
+{% if not request.user.is_authenticated %}
+<a href="/login">Login</a>
+{% endif %}
+{% endblock %}
+
+{% block Body %}
+<div>
+<h2>Register</h2>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label for="first_name">First name:</label>
+        <input type="first_name" id="first_name" name="first_name">
+    </div>
+    <div>
+        <label for="middle_name">Middle name:</label>
+        <input type="middle_name" id="middle_name" name="middle_name">
+    </div>
+    <div>
+        <label for="last_name">Last name:</label>
+        <input type="last_name" id="last_name" name="last_name">
+    </div>
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email">
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+    </div>
+    <div>
+        <label for="role">Role:</label>
+        <select id="role" name="role">
+            <option value="Visitor">Visitor</option>
+            <option value="librarian">Librarian</option>
+        </select>
+    </div>
+    <button type="submit">Register</button>
+</form>
+    </div>
+{% endblock %}
+
+
+
